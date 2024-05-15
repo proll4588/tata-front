@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import SwiperCore from 'swiper';
-import { A11y, Navigation, Pagination, Scrollbar } from 'swiper/modules';
+import { A11y, Navigation } from 'swiper/modules';
 import { Link } from 'react-router-dom';
 
 SwiperCore.use([Navigation, A11y]);
