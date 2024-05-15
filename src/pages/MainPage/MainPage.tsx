@@ -15,7 +15,7 @@ export const MainPage = () => {
     <Grid>
       <Box
         sx={{
-          background: `url(../../../public/tata.jpeg) center / cover no-repeat;`,
+          background: `url(tata.jpeg) center / cover no-repeat;`,
           width: '100%',
           height: '105vh',
           position: 'relative',
@@ -74,7 +74,7 @@ export const MainPage = () => {
               gap={4}
             >
               <img
-                src='../../../public/tata5.jpeg'
+                src='tata5.jpeg'
                 alt='tata1'
                 style={{
                   width: 400,
@@ -122,7 +122,7 @@ export const MainPage = () => {
                 </Typography>
               </Grid>
               <img
-                src='../../../public/tata9.jpeg'
+                src='tata9.jpeg'
                 alt='tata1'
                 style={{
                   width: 400,
@@ -204,66 +204,66 @@ export const MainPage = () => {
 };
 
 const photoSrc = [
-  '../../../public/photo/love-story/3D0A0320.jpg',
-  '../../../public/photo/love-story/3D0A0349.jpg',
-  '../../../public/photo/love-story/_DSC4193-5.jpg',
-  '../../../public/photo/love-story/_DSC4224-10.jpg',
-  '../../../public/photo/love-story/_DSC4240-12.jpg',
-  '../../../public/photo/love-story/_DSC4400-28.jpg',
-  '../../../public/photo/love-story/_DSC6062.jpg',
-  '../../../public/photo/love-story/_DSC6083.jpg',
-  '../../../public/photo/love-story/IMG_8428.jpg',
-  '../../../public/photo/love-story/IMG_8536.jpg',
+  'photo/love-story/3D0A0320.jpg',
+  'photo/love-story/3D0A0349.jpg',
+  'photo/love-story/_DSC4193-5.jpg',
+  'photo/love-story/_DSC4224-10.jpg',
+  'photo/love-story/_DSC4240-12.jpg',
+  'photo/love-story/_DSC4400-28.jpg',
+  'photo/love-story/_DSC6062.jpg',
+  'photo/love-story/_DSC6083.jpg',
+  'photo/love-story/IMG_8428.jpg',
+  'photo/love-story/IMG_8536.jpg',
 ];
 
 const portretSrc = [
-  '../../../public/photo/portret/1K2A8437.jpg',
-  '../../../public/photo/portret/1K2A8484.jpg',
-  '../../../public/photo/portret/1K2A8646.jpg',
-  '../../../public/photo/portret/1K2A8749.jpg',
-  '../../../public/photo/portret/_DSC2538-85.jpg',
-  '../../../public/photo/portret/_DSC2551-75.jpg',
-  '../../../public/photo/portret/_DSC3035-96.jpg',
-  '../../../public/photo/portret/_DSC4472-40.jpg',
-  '../../../public/photo/portret/_DSC4777-11.jpg',
-  '../../../public/photo/portret/_DSC4918-21.jpg',
-  '../../../public/photo/portret/IMG_0561.jpg',
-  '../../../public/photo/portret/IMG_0569.jpg',
-  '../../../public/photo/portret/IMG_0592.jpg',
-  '../../../public/photo/portret/IMG_0631.jpg',
-  '../../../public/photo/portret/IMG_0780.jpg',
-  '../../../public/photo/portret/IMG_2196.jpg',
-  '../../../public/photo/portret/IMG_2221.jpg',
-  '../../../public/photo/portret/IMG_5165.jpg',
-  '../../../public/photo/portret/IMG_5179.jpg',
+  'photo/portret/1K2A8437.jpg',
+  'photo/portret/1K2A8484.jpg',
+  'photo/portret/1K2A8646.jpg',
+  'photo/portret/1K2A8749.jpg',
+  'photo/portret/_DSC2538-85.jpg',
+  'photo/portret/_DSC2551-75.jpg',
+  'photo/portret/_DSC3035-96.jpg',
+  'photo/portret/_DSC4472-40.jpg',
+  'photo/portret/_DSC4777-11.jpg',
+  'photo/portret/_DSC4918-21.jpg',
+  'photo/portret/IMG_0561.jpg',
+  'photo/portret/IMG_0569.jpg',
+  'photo/portret/IMG_0592.jpg',
+  'photo/portret/IMG_0631.jpg',
+  'photo/portret/IMG_0780.jpg',
+  'photo/portret/IMG_2196.jpg',
+  'photo/portret/IMG_2221.jpg',
+  'photo/portret/IMG_5165.jpg',
+  'photo/portret/IMG_5179.jpg',
 ];
 
 const reportagSrc = [
-  '../../../public/photo/reportag/1K2A0088.jpg',
-  '../../../public/photo/reportag/1K2A0296.jpg',
-  '../../../public/photo/reportag/1K2A0362.jpg',
-  '../../../public/photo/reportag/1K2A0526.jpg',
-  '../../../public/photo/reportag/1K2A0683.jpg',
-  '../../../public/photo/reportag/1K2A0767.jpg',
-  '../../../public/photo/reportag/1K2A1022-Улучшено-Ум. шума.jpg',
-  '../../../public/photo/reportag/1K2A1340.jpg',
-  '../../../public/photo/reportag/1K2A2838.jpg',
-  '../../../public/photo/reportag/1K2A4291.jpg',
-  '../../../public/photo/reportag/1K2A4427.jpg',
-  '../../../public/photo/reportag/1K2A6298.jpg',
-  '../../../public/photo/reportag/1K2A6548.jpg',
-  '../../../public/photo/reportag/1K2A6670.jpg',
-  '../../../public/photo/reportag/1K2A1022-Улучшено-Ум. шума.jpg',
-  '../../../public/photo/reportag/1K2A8379.jpg',
-  '../../../public/photo/reportag/1K2A7603-Улучшено-Ум. шума.jpg',
-  '../../../public/photo/reportag/1K2A8932.jpg',
-  '../../../public/photo/reportag/1K2A9379.jpg',
-  '../../../public/photo/reportag/1K2A9489.jpg',
-  '../../../public/photo/reportag/1K2A9740.jpg',
-  '../../../public/photo/reportag/1K2A9901.jpg',
-  '../../../public/photo/reportag/3D0A9411.jpg',
-  '../../../public/photo/reportag/DSC04737.jpg',
-  '../../../public/photo/reportag/DSC04945.jpg',
+  'photo/reportag/1K2A0088.jpg',
+  'photo/reportag/1K2A0296.jpg',
+  'photo/reportag/1K2A0362.jpg',
+  'photo/reportag/1K2A0526.jpg',
+  'photo/reportag/1K2A0683.jpg',
+  'photo/reportag/1K2A0767.jpg',
+  'photo/reportag/1K2A1022-Улучшено-Ум. шума.jpg',
+  'photo/reportag/1K2A1340.jpg',
+  'photo/reportag/1K2A2838.jpg',
+  'photo/reportag/1K2A4291.jpg',
+  'photo/reportag/1K2A4427.jpg',
+  'photo/reportag/1K2A6298.jpg',
+  'photo/reportag/1K2A6548.jpg',
+  'photo/reportag/1K2A6670.jpg',
+  'photo/reportag/1K2A1022-Улучшено-Ум. шума.jpg',
+  'photo/reportag/1K2A8379.jpg',
+  'photo/reportag/1K2A7603-Улучшено-Ум. шума.jpg',
+  'photo/reportag/1K2A8932.jpg',
+  'photo/reportag/1K2A9379.jpg',
+  'photo/reportag/1K2A9489.jpg',
+  'photo/reportag/1K2A9740.jpg',
+  'photo/reportag/1K2A9901.jpg',
+  'photo/reportag/3D0A9411.jpg',
+  'photo/reportag/DSC04737.jpg',
+  'photo/reportag/DSC04945.jpg',
 ];
 
 interface GallerySwiperProps {
