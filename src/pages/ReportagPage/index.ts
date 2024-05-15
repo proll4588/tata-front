@@ -1,0 +1,1 @@
+export { ReportagPage } from "./ReportagPage";

@@ -1,0 +1,1 @@
+export { PhotoProccesPage } from "./PhotoProccesPage";

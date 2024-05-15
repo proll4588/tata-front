@@ -1,0 +1,1 @@
+export { LoveStoryPage } from "./LoveStoryPage";

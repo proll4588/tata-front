@@ -1,0 +1,1 @@
+export { PortretPage } from "./PortretPage";
