@@ -1,35 +1,26 @@
-import { Email, MenuBook, Person, Phone } from '@mui/icons-material';
+import { MenuBook } from '@mui/icons-material';
 import {
   AppBar,
   Avatar,
   Box,
   Button,
   CssBaseline,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Grid,
   IconButton,
   Menu,
   MenuItem,
-  TextField,
   Toolbar,
   Tooltip,
   Typography,
 } from '@mui/material';
-import {
-  FC,
-  PropsWithChildren,
-  ReactNode,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
+import { FC, PropsWithChildren, useMemo, useState } from 'react';
 import { AppContainer } from '../ui/PageContainer/PageContainer';
 import { useNavigate } from 'react-router-dom';
-import { Controller, useForm } from 'react-hook-form';
+import { useViewModel } from '../hooks/useViewModel';
+import { OrderDialog } from '../../features/OrderForm/OrderDialog';
+import { RegDialog } from '../../features/AuthFrom/RegDialog';
+import { LoginDialog } from '../../features/AuthFrom/LoginDialog';
+import { useAuth } from '../context/AuthContext/AuthContext';
+import { ContactDialog } from '../../features/ContactDialog/ContactDialog';
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -42,11 +33,17 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
 };
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const MyAppBar = () => {
   const navigate = useNavigate();
+
+  const { isLogin, logOut } = useAuth();
+
   const [isOpenOrder, orderDiloagController] = useViewModel();
+  const [isOpenLogin, loginDialogController] = useViewModel();
+  const [isOpenReg, regDialogController] = useViewModel();
+  const [isOpenInfo, infoDialogController] = useViewModel();
+
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -71,7 +68,12 @@ export const MyAppBar = () => {
 
   const barItemsMap = useMemo(() => {
     return [
-      { name: 'Контактная информация', action: () => {} },
+      {
+        name: 'Контактная информация',
+        action: () => {
+          infoDialogController.open();
+        },
+      },
       {
         name: 'Заказать услугу',
         action: () => {
@@ -87,12 +89,35 @@ export const MyAppBar = () => {
     ];
   }, []);
 
+  const settings = useMemo(() => {
+    return [
+      {
+        title: 'Выйти',
+        action: logOut,
+      },
+    ];
+  }, [logOut]);
+
   return (
     <>
       <OrderDialog
         isOpen={isOpenOrder}
         onClose={orderDiloagController.close}
       />
+      <RegDialog
+        isOpen={isOpenReg}
+        onClose={regDialogController.close}
+      />
+      <LoginDialog
+        isOpen={isOpenLogin}
+        onClose={loginDialogController.close}
+      />
+
+      <ContactDialog
+        isOpen={isOpenInfo}
+        onClose={infoDialogController.close}
+      />
+
       <AppBar position='static'>
         <AppContainer>
           <Toolbar disableGutters>
@@ -199,260 +224,71 @@ export const MyAppBar = () => {
               ))}
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title='Open settings'>
-                <IconButton
-                  onClick={handleOpenUserMenu}
-                  sx={{ p: 0 }}
+            {!isLogin ? (
+              <Box sx={{ flexGrow: 0, gap: 1, display: 'flex' }}>
+                <Button
+                  variant='contained'
+                  color='info'
+                  onClick={loginDialogController.open}
                 >
-                  <Avatar
-                    alt='Remy Sharp'
-                    src='/static/images/avatar/2.jpg'
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id='menu-appbar'
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting}
-                    onClick={handleCloseUserMenu}
+                  Войти
+                </Button>
+                <Button
+                  variant='contained'
+                  color='warning'
+                  onClick={regDialogController.open}
+                >
+                  Зарегистрироваться
+                </Button>
+              </Box>
+            ) : (
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title='Open settings'>
+                  <IconButton
+                    onClick={handleOpenUserMenu}
+                    sx={{ p: 0 }}
                   >
-                    <Typography textAlign='center'>{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
+                    <Avatar
+                      alt='Remy Sharp'
+                      src='/static/images/avatar/2.jpg'
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id='menu-appbar'
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem
+                      key={setting.title}
+                      onClick={() => {
+                        handleCloseUserMenu();
+                        setting.action();
+                      }}
+                    >
+                      <Typography textAlign='center'>
+                        {setting.title}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            )}
           </Toolbar>
         </AppContainer>
       </AppBar>
     </>
   );
-};
-
-//
-const phoneNumberValidator = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/g;
-
-interface OrderFormFields {
-  phone: string;
-  email: string;
-  name: string;
-  description: string;
-}
-interface OrderFormProps {
-  onSubmit: (form: OrderFormFields) => void;
-  renderActions: () => ReactNode;
-}
-export const OrderForm: FC<OrderFormProps> = ({ onSubmit, renderActions }) => {
-  const { control, handleSubmit } = useForm<OrderFormFields>();
-
-  return (
-    <Grid
-      component={'form'}
-      onSubmit={handleSubmit(onSubmit)}
-      container
-      flexDirection={'column'}
-      gap={2}
-      pt={1}
-    >
-      <Controller
-        control={control}
-        name='name'
-        rules={{ required: true, maxLength: 30 }}
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <TextField
-            label='Имя'
-            placeholder='Как вас зовут'
-            required
-            value={value}
-            error={!!error}
-            helperText={error?.message || 'Мне достаточно просто вашего имени'}
-            InputProps={{
-              startAdornment: (
-                <Person
-                  sx={{ mr: 1 }}
-                  color='action'
-                />
-              ),
-            }}
-            variant='standard'
-            onChange={(e) => {
-              onChange(e.target.value);
-            }}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        name='phone'
-        rules={{ required: true, pattern: phoneNumberValidator }}
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <TextField
-            label='Номер телефона'
-            // placeholder='Введите свой номер телефона'
-            placeholder='XXX XXX XXXX'
-            required
-            value={value}
-            type='tel'
-            prefix='+7'
-            error={!!error}
-            helperText={
-              error?.message ||
-              'Будьте на связи, чтобы я смогла с вами связаться'
-            }
-            InputProps={{
-              startAdornment: (
-                <>
-                  <Phone
-                    sx={{ mr: 1 }}
-                    color='action'
-                  />
-                  <Typography
-                    mr={1}
-                    color={'grey'}
-                  >
-                    +7{' '}
-                  </Typography>
-                </>
-              ),
-            }}
-            variant='standard'
-            onChange={(e) => {
-              const newVal = e.target.value.replace(/\D/g, '');
-              //   if (/\d/.test(newVal[newVal.length - 1]))
-              //     onChange(newVal.slice(0, -1));
-
-              if (newVal.length <= 10) {
-                let proc = newVal.replace(/ /gm, '');
-                let num = `${proc.substring(0, 3)} ${proc.substring(
-                  3,
-                  6
-                )} ${proc.substring(6, proc.length)}`;
-
-                num = num.trim();
-                onChange(num);
-              }
-            }}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        name='email'
-        rules={{ required: true }}
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <TextField
-            label='Почта'
-            placeholder='Ваша почта'
-            required
-            value={value}
-            type='email'
-            error={!!error}
-            helperText={
-              error?.message || 'На случай если я не смогу до вас дозвониться'
-            }
-            InputProps={{
-              startAdornment: (
-                <Email
-                  sx={{ mr: 1 }}
-                  color='action'
-                />
-              ),
-            }}
-            variant='standard'
-            onChange={(e) => {
-              onChange(e.target.value);
-            }}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        name='description'
-        render={({ field: { value, onChange } }) => (
-          <TextField
-            label='Пожелания'
-            placeholder='Введите свои пожелания'
-            value={value}
-            multiline
-            minRows={4}
-            maxRows={4}
-            onChange={(e) => {
-              onChange(e.target.value);
-            }}
-          />
-        )}
-      />
-      {renderActions()}
-    </Grid>
-  );
-};
-
-interface OrderDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-export const OrderDialog: FC<OrderDialogProps> = ({ isOpen, onClose }) => {
-  return (
-    <Dialog
-      open={isOpen}
-      onClose={onClose}
-    >
-      <DialogTitle>Заказать услугу</DialogTitle>
-
-      <DialogContent sx={{ width: 550 }}>
-        <DialogContentText>
-          * Заполните данную форму что-бы я могла с вами связаться.
-        </DialogContentText>
-        <OrderForm
-          onSubmit={() => {}}
-          renderActions={() => (
-            <DialogActions>
-              <Button
-                onClick={onClose}
-                color='error'
-                variant='outlined'
-              >
-                Закрыть
-              </Button>
-              <Button
-                type='submit'
-                variant='contained'
-              >
-                Отправить
-              </Button>
-            </DialogActions>
-          )}
-        />
-      </DialogContent>
-    </Dialog>
-  );
-};
-
-export const useViewModel = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const open = useCallback(() => {
-    setIsOpen(true);
-  }, [setIsOpen]);
-
-  const close = useCallback(() => {
-    setIsOpen(false);
-  }, [setIsOpen]);
-
-  return [isOpen, { open, close }] as const;
 };
