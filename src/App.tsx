@@ -5,8 +5,12 @@ import { LoveStoryPage } from './pages/LoveStoryPage';
 import { PortretPage } from './pages/PortretPage';
 import { ReportagPage } from './pages/ReportagPage';
 import { MainPage } from './pages/MainPage';
+import { useAuth } from './shared/context/AuthContext/AuthContext';
+import { UserRequestsPage } from './pages/UserRequestsPage/UserRequestsPage';
 
 export const App = () => {
+  const { isLogin } = useAuth();
+
   return (
     <BrowserRouter>
       <Layout>
@@ -31,6 +35,15 @@ export const App = () => {
             path='/reportage'
             element={<ReportagPage />}
           />
+
+          {isLogin && (
+            <>
+              <Route
+                path='/user-requests'
+                element={<UserRequestsPage />}
+              />
+            </>
+          )}
         </Routes>
       </Layout>
     </BrowserRouter>

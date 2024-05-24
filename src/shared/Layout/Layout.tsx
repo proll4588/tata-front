@@ -95,6 +95,12 @@ export const MyAppBar = () => {
         title: 'Выйти',
         action: logOut,
       },
+      {
+        title: 'Заказы',
+        action: () => {
+          navigate('/user-requests');
+        },
+      },
     ];
   }, [logOut]);
 

@@ -24,6 +24,31 @@ export interface RequestItem {
   price: number | null;
 }
 
+export interface ExtendedRequestItem extends RequestItem {
+  statuses: {
+    id: number;
+    title: string;
+    description: string | null;
+  };
+  photo_categorys: {
+    id: number;
+    title: string;
+  };
+  photo_types: {
+    id: number;
+    title: string;
+  };
+  photo_urls: {
+    id: number;
+    url: string;
+    endDate: Date | null;
+  } | null;
+  users: {
+    id: number;
+    email: string;
+  } | null;
+}
+
 export interface CreateRequestRequest {
   token?: string;
   data: Omit<
@@ -47,8 +72,37 @@ const requestApi = providerApi.injectEndpoints({
         method: 'post',
         body,
       }),
+      invalidatesTags: ['request'],
+    }),
+
+    getUserRequests: build.query<
+      {
+        requests: ExtendedRequestItem[];
+      },
+      { token: string }
+    >({
+      query: (body) => ({
+        url: '/request/getUserRequests',
+        method: 'post',
+        body,
+      }),
+      providesTags: ['request'],
+    }),
+
+    cancelUserRequest: build.mutation<RequestItem, { requestId: number }>({
+      query: (body) => ({
+        url: '/request/cancelRequest',
+        method: 'post',
+        body,
+      }),
+      invalidatesTags: ['request'],
     }),
   }),
 });
 
-export const { useGetOptionsQuery, useCreateRequestMutation } = requestApi;
+export const {
+  useGetOptionsQuery,
+  useCreateRequestMutation,
+  useGetUserRequestsQuery,
+  useCancelUserRequestMutation,
+} = requestApi;

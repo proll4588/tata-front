@@ -12,11 +12,15 @@ interface AuthContextFields {
   isLogin: boolean;
   auth: (token: string) => void;
   logOut: () => void;
+  getToken: () => string | undefined;
 }
 const AUTH_CONTEXT_INIT: AuthContextFields = {
   isLogin: false,
   auth: () => {},
   logOut: () => {},
+  getToken: () => {
+    return undefined;
+  },
 };
 export const AuthContext = createContext<AuthContextFields>(AUTH_CONTEXT_INIT);
 export const useAuth = () => useContext(AuthContext);
@@ -39,12 +43,17 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     setIsLogin(true);
   };
 
+  const getToken = () => {
+    return token.get()?.token;
+  };
+
   return (
     <AuthContext.Provider
       value={{
         isLogin,
         logOut,
         auth,
+        getToken,
       }}
     >
       {children}
