@@ -93,7 +93,7 @@ export const PhotoProccesPage = () => {
           >
             <CircularProgress />
             <Typography>
-              Фото обрабатывается, это может занять несколько минуть
+              Фото обрабатывается, это может занять несколько минут
             </Typography>
           </Box>
         )}

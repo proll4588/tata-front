@@ -7,6 +7,7 @@ import { ReportagPage } from './pages/ReportagPage';
 import { MainPage } from './pages/MainPage';
 import { useAuth } from './shared/context/AuthContext/AuthContext';
 import { UserRequestsPage } from './pages/UserRequestsPage/UserRequestsPage';
+import { AdminPage } from './pages/AdminPage/AdminPage';
 
 export const App = () => {
   const { isLogin } = useAuth();
@@ -34,6 +35,10 @@ export const App = () => {
           <Route
             path='/reportage'
             element={<ReportagPage />}
+          />
+          <Route
+            path='/admin'
+            element={<AdminPage />}
           />
 
           {isLogin && (

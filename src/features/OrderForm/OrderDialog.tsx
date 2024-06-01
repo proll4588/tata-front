@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   Dialog,
   DialogTitle,
@@ -66,7 +67,7 @@ export const OrderDialog: FC<OrderDialogProps> = ({ isOpen, onClose }) => {
           </DialogContentText>
         )}
         <DialogContentText>
-          * Заполните данную форму что-бы я могла с вами связаться.
+          * Заполните данную форму чтобы я могла с вами связаться.
         </DialogContentText>
         <OrderForm
           onSubmit={submit}

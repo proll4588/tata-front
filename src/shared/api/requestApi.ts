@@ -97,6 +97,52 @@ const requestApi = providerApi.injectEndpoints({
       }),
       invalidatesTags: ['request'],
     }),
+
+    getAllUsersRequests: build.query<
+      {
+        requests: ExtendedRequestItem[];
+      },
+      { token: string }
+    >({
+      query: (body) => ({
+        url: '/request/getAllRequests',
+        method: 'post',
+        body,
+      }),
+      providesTags: ['request'],
+    }),
+
+    setPrice: build.mutation<RequestItem, { requestId: number; price: number }>(
+      {
+        query: (body) => ({
+          url: '/request/setPrice',
+          method: 'post',
+          body,
+        }),
+        invalidatesTags: ['request'],
+      }
+    ),
+
+    addUrl: build.mutation<RequestItem, { requestId: number; url: string }>({
+      query: (body) => ({
+        url: '/request/addUrl',
+        method: 'post',
+        body,
+      }),
+      invalidatesTags: ['request'],
+    }),
+
+    setStatus: build.mutation<
+      RequestItem,
+      { requestId: number; statusId: number }
+    >({
+      query: (body) => ({
+        url: '/request/setStatus',
+        method: 'post',
+        body,
+      }),
+      invalidatesTags: ['request'],
+    }),
   }),
 });
 
@@ -105,4 +151,8 @@ export const {
   useCreateRequestMutation,
   useGetUserRequestsQuery,
   useCancelUserRequestMutation,
+  useGetAllUsersRequestsQuery,
+  useAddUrlMutation,
+  useSetPriceMutation,
+  useSetStatusMutation,
 } = requestApi;

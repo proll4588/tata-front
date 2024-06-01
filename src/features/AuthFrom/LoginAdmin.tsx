@@ -8,32 +8,36 @@ import {
 } from '@mui/material';
 import { FC } from 'react';
 import { RegFrom } from './RegFrom';
-import { useLoginAdminMutation } from '../../shared/api/authApi';
 import { RegFromFields } from './type';
-import { token } from '../../shared/utils/token';
 
 interface LoginAdminDialogProps {
   isOpen: boolean;
   onClose?: () => void;
+  submit: (form: RegFromFields) => void;
+  error?: string;
+  isLoading?: boolean;
 }
 export const LoginAdminDialog: FC<LoginAdminDialogProps> = ({
   isOpen,
   onClose,
+  submit,
+  error,
+  isLoading = false,
 }) => {
-  const [login, { isLoading, error }] = useLoginAdminMutation();
+  // const [login, { isLoading, error }] = useLoginAdminMutation();
 
-  const submit = (form: RegFromFields) => {
-    login({ email: form.email, password: form.password }).then((ans) => {
-      if ('error' in ans) {
-        return;
-      }
+  // const submit = (form: RegFromFields) => {
+  //   login({ email: form.email, password: form.password }).then((ans) => {
+  //     if ('error' in ans) {
+  //       return;
+  //     }
 
-      if ('data' in ans) {
-        token.save(ans.data.token);
-        onClose?.();
-      }
-    });
-  };
+  //     if ('data' in ans) {
+  //       token.save(ans.data.token);
+  //       onClose?.();
+  //     }
+  //   });
+  // };
 
   return (
     <Dialog
@@ -43,12 +47,7 @@ export const LoginAdminDialog: FC<LoginAdminDialogProps> = ({
       <DialogTitle>Вход</DialogTitle>
 
       <DialogContent sx={{ width: 550 }}>
-        {error && 'data' in error && (
-          <DialogContentText color={'red'}>
-            {/* @ts-ignore */}
-            {''}*{error.data!.error}
-          </DialogContentText>
-        )}
+        {error && <DialogContentText color={'red'}>*{error}</DialogContentText>}
         <RegFrom
           isError={!!error}
           onSubmit={submit}
@@ -67,7 +66,7 @@ export const LoginAdminDialog: FC<LoginAdminDialogProps> = ({
                 disabled={isLoading}
                 variant='contained'
               >
-                Зарегистрироваться
+                Войти
               </Button>
             </DialogActions>
           )}
